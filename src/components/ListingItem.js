@@ -1,17 +1,14 @@
 import PropTypes from 'prop-types';
 
 export default function ListingItem({ id, url, img, title, currencyCode, price, quantity }) {
-    if (!(id && url && img && title && currencyCode && price && quantity)) return null;
     let newTitle = '';
     if (title.length > 50) {
       newTitle = title.substring(0, 50) + '...';
     }
   
-    let newCurrency = '';
-    if (currencyCode === 'USD') {
-      newCurrency = '$';
-    } else if (currencyCode === 'EUR') {
-      newCurrency = '€';
+    const currency = {
+      'USD': '$',
+      'EUR': '€'
     }
   
     let qtyLevel = '';
@@ -31,9 +28,9 @@ export default function ListingItem({ id, url, img, title, currencyCode, price, 
         <div className="item-details">
           <p className="item-title">{newTitle || title}</p>
           <p className="item-price">
-            {newCurrency}
+            {currency[currencyCode]}
             {price}
-            {!newCurrency && ' ' + currencyCode}
+            {!currency[currencyCode] && ' ' + currencyCode}
           </p>
           <p className={'item-quantity ' + qtyLevel}>{quantity} left</p>
         </div>
@@ -43,10 +40,19 @@ export default function ListingItem({ id, url, img, title, currencyCode, price, 
   
   ListingItem.propTypes = {
     id: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-    img: PropTypes.object.isRequired,
-    title: PropTypes.string.isRequired,
-    currencyCode: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
-    quantity: PropTypes.number.isRequired,
+    url: PropTypes.string,
+    img: PropTypes.object,
+    title: PropTypes.string,
+    currencyCode: PropTypes.string,
+    price: PropTypes.string,
+    quantity: PropTypes.number,
   };
+
+  ListingItem.defaultProps = {
+    url: '#',
+    img: {url_570xN: 'https://m.sobaka.ru/system/inline_image/image/00/00/87/28/base_1122.jpg'},
+    title: 'Похоже, тут должно быть описание...',
+    currencyCode: 'усл.ед',
+    price: '???',
+    quantity: 1,
+  }
