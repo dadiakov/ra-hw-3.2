@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 export default function ListingItem({ id, url, img, title, currencyCode, price, quantity }) {
-    if (!(url && img && title && currencyCode && price && quantity)) return null;
+    if (!(id && url && img && title && currencyCode && price && quantity)) return null;
     let newTitle = '';
     if (title.length > 50) {
       newTitle = title.substring(0, 50) + '...';
